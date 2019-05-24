@@ -103,7 +103,7 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100%;
-    background-image:url(	https://aurora-1255840532.cos.ap-chengdu.myqcloud.com/1547428971990.jpg);
+    background-image:url(	'./../../assets/background/1547428971990.jpg');
     background-size: cover;
   }
   .title {
