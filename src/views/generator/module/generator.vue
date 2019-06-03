@@ -2,6 +2,11 @@
   <div>
     <el-button type="primary" size="mini" @click="to">生成代码</el-button>
     <el-dialog :visible.sync="dialog" title="代码生成配置" append-to-body width="800px">
+      <el-form>
+        <el-form-item label="实体类名">
+          <el-input v-model="entityName" style="width: 370px;"/>
+        </el-form-item>
+      </el-form>
       <el-table v-loading="loading" :data="data" size="small" style="width: 100%;">
         <el-table-column label="序号" width="80" align="center">
           <template slot-scope="scope">
@@ -51,6 +56,7 @@
 <script>
 import initData from '@/mixins/initData'
 import { generator } from '@/api/generator'
+
 export default {
   name: 'Generator',
   mixins: [initData],
@@ -62,10 +68,13 @@ export default {
   },
   data() {
     return {
-      genLoading: false, dialog: false, columnQuery: ''
+      genLoading: false, dialog: false, columnQuery: '', entityName: null
     }
   },
   methods: {
+    created() {
+      this.entityName = this.name
+    },
     to() {
       this.dialog = true
       this.time = 130
@@ -84,7 +93,7 @@ export default {
     },
     doSubmit() {
       this.genLoading = true
-      generator(this.data, this.name).then(res => {
+      generator(this.data, this.name, this.entityName).then(res => {
         this.$notify({
           title: '生成成功',
           type: 'success',
